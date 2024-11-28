@@ -5,9 +5,9 @@ import cloudinary from "../lib/cloudinary.js";
 import { generateToken } from "../lib/utils.js";
 
 export const signup = async (req, res) => {
-  const { email, fullname, password } = req.body;
+  const { email, fullName, password } = req.body;
   try {
-    if (!email || !fullname || !password) {
+    if (!email || !fullName || !password) {
       return res.status(400).json({ message: "All fields are required" });
     }
     if (password.length < 6) {
@@ -22,7 +22,7 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
       email,
-      fullname,
+      fullName,
       password: hashedPassword,
     });
     if (newUser) {
@@ -31,7 +31,7 @@ export const signup = async (req, res) => {
       res.status(201).json({
         _id: newUser._id,
         email: newUser.email,
-        fullname: newUser.fullname,
+        fullName: newUser.fullName,
         profilePic: newUser.profilePic,
       });
     } else {
